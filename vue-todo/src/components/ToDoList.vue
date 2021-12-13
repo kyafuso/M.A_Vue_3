@@ -14,7 +14,7 @@
           <td>{{ todo.id }}</td>
           <td>{{ todo.comment }}</td>
           <td>{{ todo.status }}</td>
-          <td><button>削除</button></td>
+          <td><button v-on:click="deleteToDo">削除</button></td>
         </tr>
       </tbody>
     </table>
@@ -30,6 +30,11 @@ export default {
     ...mapGetters([
       'todos'
     ])
-  }
+  },
+  methods:{
+    deleteToDo: function(){
+      this.$store.commit('DELETE_TODO', this.id);
+    }
+  },
 }
 </script>

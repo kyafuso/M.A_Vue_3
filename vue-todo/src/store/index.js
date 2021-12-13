@@ -13,14 +13,20 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ADD_TODO (state, comment) {
-      
+    ADD_TODO (state, comment) {      
       const id = state.todos.length;
+      const status = '作業中';
 
       state.todos.push({
-        id: id,
-        comment: comment,
-        status: '作業中'
+        id,
+        comment,
+        status
+      });
+    },
+    DELETE_TODO (state, id) {
+      state.todos.splice(id, 1);
+      state.todos.forEach((todo, index) => {
+        todo.id = index;
       });
     }
   },
