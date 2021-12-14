@@ -13,8 +13,8 @@
         <tr>
           <td>{{ todo.id }}</td>
           <td>{{ todo.comment }}</td>
-          <td>{{ todo.status }}</td>
-          <td><button v-on:click="deleteToDo">削除</button></td>
+          <td><button v-on:click="changeStatus(todo.id)">{{ todo.status }}</button></td>
+          <td><button v-on:click="deleteToDo(todo.id)">削除</button></td>
         </tr>
       </tbody>
     </table>
@@ -32,8 +32,11 @@ export default {
     ])
   },
   methods:{
-    deleteToDo: function(){
-      this.$store.commit('DELETE_TODO', this.id);
+    changeStatus: function(id){
+      this.$store.commit('changeStatus', id);
+    },
+    deleteToDo: function(id){
+      this.$store.commit('deleteToDo', id);
     }
   },
 }
