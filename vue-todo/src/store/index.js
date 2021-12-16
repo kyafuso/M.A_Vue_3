@@ -13,7 +13,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ADD_TODO (state, comment) {      
+    addToDo (state, comment) {      
       const id = state.todos.length;
       const status = '作業中';
 
@@ -23,8 +23,16 @@ export default new Vuex.Store({
         status
       });
     },
-    DELETE_TODO (state, id) {
-      state.todos.splice(id, 1);
+    changeStatus (state, id) {     
+      const status = state.todos[id].status;      
+      if (status === '作業中') {
+        state.todos[id].status = '完了';
+      } else {
+        state.todos[id].status = '作業中';  
+      }
+    },
+    deleteToDo (state, id) {
+      state.todos.splice(id, 1);      
       state.todos.forEach((todo, index) => {
         todo.id = index;
       });

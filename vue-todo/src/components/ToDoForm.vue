@@ -16,7 +16,7 @@ export default {
   },
   methods:{
     addToDo: function(){
-      this.$store.commit('ADD_TODO', this.comment);
+      this.$store.commit('addToDo', this.comment);
       this.comment = '';
     }
   },
