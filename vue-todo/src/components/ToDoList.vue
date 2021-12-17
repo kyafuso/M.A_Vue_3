@@ -1,5 +1,9 @@
 <template>
   <div class="todo-list">
+    <input type="radio" v-model="radioStatus" value="全て">全て
+    <input type="radio" v-model="radioStatus" value="作業中">作業中
+    <input type="radio" v-model="radioStatus" value="完了">完了
+    <p>{{ radioStatus }}</p>
     <table id="todo-table">
       <thead>
         <tr>
@@ -9,7 +13,7 @@
           <th></th>
         </tr>
       </thead>
-      <tbody v-for="todo in todos" v-bind:key="todo.id">
+      <tbody v-for="todo in todosByStatus" v-bind:key="todo.id">
         <tr>
           <td>{{ todo.id }}</td>
           <td>{{ todo.comment }}</td>
@@ -26,18 +30,36 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ToDoList',
+  data : function() {
+    return{
+      radioStatus : '全て',
+    }
+  },
   computed : {
     ...mapGetters([
       'todos'
-    ])
-  },
-  methods:{
-    changeStatus: function(id){
-      this.$store.commit('changeStatus', id);
-    },
-    deleteToDo: function(id){
-      this.$store.commit('deleteToDo', id);
+    ]),
+    todosByStatus: function() {
+      let todos = [];
+
+      if (this.radioStatus === '全て') {
+        todos = this.todos;
+      } else if (this.radioStatus === '作業中') {
+        todos = this.todos.filter(todo => todo.status === '作業中');
+      } else if (this.radioStatus === '完了') {
+        todos = this.todos.filter(todo => todo.status === '完了');
+      }
+
+      return todos;
     }
   },
+  methods:{
+    changeStatus: function(id) {
+      this.$store.commit('changeStatus', id);
+    },
+    deleteToDo: function(id) {
+      this.$store.commit('deleteToDo', id);
+    }
+  }
 }
 </script>
