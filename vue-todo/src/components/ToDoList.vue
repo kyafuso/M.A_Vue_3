@@ -3,7 +3,6 @@
     <input type="radio" v-model="radioStatus" value="全て">全て
     <input type="radio" v-model="radioStatus" value="作業中">作業中
     <input type="radio" v-model="radioStatus" value="完了">完了
-    <p>{{ radioStatus }}</p>
     <table id="todo-table">
       <thead>
         <tr>
@@ -40,17 +39,15 @@ export default {
       'todos'
     ]),
     todosByStatus: function() {
-      let todos = [];
-
-      if (this.radioStatus === '全て') {
-        todos = this.todos;
-      } else if (this.radioStatus === '作業中') {
-        todos = this.todos.filter(todo => todo.status === '作業中');
+      
+      if (this.radioStatus === '作業中') {
+        return this.todos.filter(todo => todo.status === '作業中');
       } else if (this.radioStatus === '完了') {
-        todos = this.todos.filter(todo => todo.status === '完了');
+        return this.todos.filter(todo => todo.status === '完了');
       }
 
-      return todos;
+      //radioStatusが全ての場合は、todosをそのまま返す。
+      return this.todos;
     }
   },
   methods:{
